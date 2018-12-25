@@ -22,6 +22,7 @@ const TodoSchema = new Schema({
         required: true,
         default: false
     },
+    checklist: {[]},
     completed_at:{
         type: Number, 
         required: false
