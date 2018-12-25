@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const {authenticate} = require('./middlewares/authenticated');
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const _ = require('lodash');
 
 let app = express();
@@ -130,9 +131,44 @@ app.patch('/user/:id',(req , res)=>{
 })
 
 app.post('/todos',authenticate,(req , res)=>{
-    const data = _.pick(req.body,['title','description'])
+    const data = _.pick(req.body,['title','description']);
+    const created_at = moment().format('YYYY-MM-DD HH:mm:ss');
+    const created_by = req.user._id;
+    const user = new Todo({...data,created_at,created_by});
+
+    user.save().then((resp)=>{
+        res.send(resp);
+    }).catch(error=>{
+        res.status(400).send(error);
+    })
+})
+app.post('/todos/complete/:id',authenticate,(req , res)=>{
+    const data = _.pick(req.body,['completed']);
+    const id = req.param('id');
+    const user = Todo.findById(id).then((user)=>{
+        return user.complete(data.completed);
+        
+    }).then((resp)=>{
+        res.send(resp);
+    }).catch((error)=>{
+        console.log(error);
+        res.status(400).send(error);
+    });
+
 })
 
+app.patch('/todos/:id',authenticate,(req , res)=>{
+    const data = _.pick(req.body,['title','description']);
+    const id = req.param('id');
+
+    const user = Todo.findByIdAndUpdate(id,{$set: data},{new: true}).then((user)=>{
+        res.send(user);
+    }).catch((error)=>{
+        res.status(400).send(error);
+    });
+
+    
+});
 
 app.listen(3000,(resp)=>{
     console.log("server running")
