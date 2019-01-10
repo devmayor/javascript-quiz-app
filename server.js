@@ -4,39 +4,47 @@ const {User} = require('./db/models/user');
 const {Todo} = require('./db/models/todo');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
-const {authenticate} = require('./middlewares/authenticated');
+const {authenticate} = require('./app/middlewares/authenticated');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const _ = require('lodash');
+const AuthRoutes = require('./routes/auth');
 
 let app = express();
 
 app.use(bodyParser.json());
 
-app.post('/add',(req , res)=>{
-    const data = req.body;
-    let user = new User({
-        email: data.email,
-        name: data.name,
-        age: data.age,
-        location: data.location,
-        password: data.password
-    });
+app.use('/auth',AuthRoutes);
+
+
+
+
+
+
+// app.post('/add',(req , res)=>{
+//     const data = req.body;
+//     let user = new User({
+//         email: data.email,
+//         name: data.name,
+//         age: data.age,
+//         location: data.location,
+//         password: data.password
+//     });
     
 
-    user.save().then((resp)=>{
+//     user.save().then((resp)=>{
         
-        resp.generateAuthToken().then((token) => {
+//         resp.generateAuthToken().then((token) => {
             
-            res.header('x-auth', token).send(resp);
-          }).catch((e) => {
-            res.status(400).send(e);
-          })
+//             res.header('x-auth', token).send(resp);
+//           }).catch((e) => {
+//             res.status(400).send(e);
+//           })
         
-    },(error)=>{
-        res.status(400).send(error);
-    });
-})
+//     },(error)=>{
+//         res.status(400).send(error);
+//     });
+// })
 
 app.post('/user/auth',(req , res)=>{
     const data = _.pick(req.body,['email','password']);
@@ -129,7 +137,13 @@ app.patch('/user/:id',(req , res)=>{
         res.status(404).send();
     })
 })
-
+app.get('/todos',authenticate,(req , res)=>{
+    Todo.find({created_by: req.user._id}).then((todos)=>{
+        res.send(todos);
+    }).catch((error)=>{
+        res.status('400').send();
+    })
+})
 app.post('/todos',authenticate,(req , res)=>{
     const data = _.pick(req.body,['title','description']);
     const created_at = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -170,6 +184,17 @@ app.patch('/todos/:id',authenticate,(req , res)=>{
     
 });
 
+app.delete('/todos/:id',authenticate,(req , res)=>{
+    const id = req.param('id');
+    const user = Todo.findByIdAndDelete(id).then((user)=>{
+        res.send(user);
+    }).catch((error)=>{
+        res.status(400).send(error);
+    });
+});
+app.post('/checklist/:todoId',authenticate,(req , res)=>{
+    
+})
 app.listen(3000,(resp)=>{
     console.log("server running")
 })
