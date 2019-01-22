@@ -17,59 +17,6 @@ app.use(bodyParser.json());
 app.use('/auth',AuthRoutes);
 
 
-
-
-
-
-// app.post('/add',(req , res)=>{
-//     const data = req.body;
-//     let user = new User({
-//         email: data.email,
-//         name: data.name,
-//         age: data.age,
-//         location: data.location,
-//         password: data.password
-//     });
-    
-
-//     user.save().then((resp)=>{
-        
-//         resp.generateAuthToken().then((token) => {
-            
-//             res.header('x-auth', token).send(resp);
-//           }).catch((e) => {
-//             res.status(400).send(e);
-//           })
-        
-//     },(error)=>{
-//         res.status(400).send(error);
-//     });
-// })
-
-app.post('/user/auth',(req , res)=>{
-    const data = _.pick(req.body,['email','password']);
-    
-    const users = User.findOne({email: data.email}).then((resp)=>{
-        return bcrypt.compare(data.password,resp.password);
-    }).then((result)=>{
-        if(!result){
-            return Promise.reject();
-        }
-        return new Promise((resolve , reject)=>{
-            User.findOne({email: data.email}).then((user)=>{
-                resolve(user.generateAuthToken());
-            }).catch((error)=>{
-                reject(error);
-            })
-        }) 
-    }).then((token)=>{
-        res.setHeader('x-auth',token);
-        res.send();
-    }).catch((error)=>{
-        res.status(401).send();
-    })
-})
-
 app.post('/user/auth/logout',authenticate,(req , res)=>{
     const user = req.user;
     user.logout(req.token).then((resp)=>{
