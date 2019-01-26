@@ -1,4 +1,5 @@
 const {User} = require('../../db/models/user');
+const _ = require('lodash');
 
 //function to register a new user
 module.exports.register = (req , res)=>{

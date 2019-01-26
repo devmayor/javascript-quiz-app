@@ -7,7 +7,7 @@ const Router = express.Router();
 Router.post('/register',authValidators.register,auth.register);
 
 // Route to login user
-Router.post('/user/auth', authValidators.login ,auth.login)
+Router.post('/login', authValidators.login ,auth.login)
 
 
 module.exports = Router;

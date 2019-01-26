@@ -7,7 +7,7 @@ let Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     name : {
-        type :String,
+        type : String,
         required: true,
         trim: true
     },
@@ -16,6 +16,7 @@ const userSchema = new Schema({
         required: true,
         trim: true,
         minlength: 1,
+        index: true,
         unique: true,
         validate: {
             validator: validator.isEmail,
