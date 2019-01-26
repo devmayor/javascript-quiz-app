@@ -2,18 +2,17 @@ const { body } = require('express-validator/check');
 const {User} = require('../../db/models/user');
 module.exports.register = [
     body('email')
-    .custom((value)=>{
+    .isEmail()
+    .custom((value , {req})=>{
         // return User.findOne({'email':value}).then((resp)=>{
         //     if(resp){
         //         return Promise.reject("This user exists already");
         //     }
         // });
         // if (alreadyHaveEmail(email)) {
-            return Promise.reject("This user exists already");
+            return new Error("This user exists already");
         //   }
-    })
-    .isEmail()
-    .normalizeEmail(),
+    }),
     body('name','name field is incorrect')
     .trim()
     .isLength({min:1, max: 50})

@@ -53,3 +53,11 @@ module.exports.login = (req , res)=>{
         res.status(401).send();
     })
 }
+
+// logout function
+module.exports.logout = (req , res)=>{
+    const user = req.user;
+    user.logout(req.token).then((resp)=>{
+        res.send();
+    })
+}

@@ -16,12 +16,6 @@ app.use(bodyParser.json());
 app.use('/auth',AuthRoutes);
 
 
-app.post('/user/auth/logout',authenticate,(req , res)=>{
-    const user = req.user;
-    user.logout(req.token).then((resp)=>{
-        res.send();
-    })
-})
 
 app.get('/users',(req , res)=>{
     User.find().then((resp)=>{
