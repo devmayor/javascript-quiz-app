@@ -15,17 +15,6 @@ app.use(bodyParser.json());
 
 app.use('/auth',AuthRoutes);
 
-
-
-app.get('/users',(req , res)=>{
-    User.find().then((resp)=>{
-        res.send(resp);
-    },(err)=>{
-        res.status(401).send();
-    })
-    
-})
-
 app.get('/user/me',authenticate,(req , res)=>{
     res.send(req.user);
 })
