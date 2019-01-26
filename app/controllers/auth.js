@@ -1,6 +1,6 @@
 const {User} = require('../../db/models/user');
 const _ = require('lodash');
-
+const bcrypt = require('bcryptjs');
 //function to register a new user
 module.exports.register = (req , res)=>{
     const data = req.body;
@@ -34,6 +34,7 @@ module.exports.login = (req , res)=>{
     const users = User.findOne({email: data.email}).then((resp)=>{
         return bcrypt.compare(data.password,resp.password);
     }).then((result)=>{
+        console.log(result);
         if(!result){
             return Promise.reject();
         }
@@ -48,6 +49,7 @@ module.exports.login = (req , res)=>{
         res.setHeader('x-auth',token);
         res.send();
     }).catch((error)=>{
+        console.log(error);
         res.status(401).send();
     })
 }

@@ -5,7 +5,6 @@ const {Todo} = require('./db/models/todo');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 const {authenticate} = require('./app/middlewares/authenticated');
-const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const _ = require('lodash');
 const AuthRoutes = require('./routes/auth');
