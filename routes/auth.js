@@ -19,5 +19,15 @@ Router.get('/users',authenticate, users.users);
 // Route to get authenticated user account
 Router.get('/user/me',authenticate, users.me);
 
+// Route to get user profile
+Router.get('/user/:id', users.profile);
+
+// Route to delete a user
+Router.delete('/user/:id', authenticate ,users.delete);
+
+// Route to update a user profile
+Router.patch('/user/:id',authenticate ,users.update);
+
+
 
 module.exports = Router;
