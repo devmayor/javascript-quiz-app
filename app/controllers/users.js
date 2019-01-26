@@ -8,3 +8,7 @@ module.exports.users = (req , res)=>{
     })
     
 }
+
+module.exports.me = (req , res)=>{
+    res.send(req.user);
+}

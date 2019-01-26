@@ -15,9 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/auth',AuthRoutes);
 
-app.get('/user/me',authenticate,(req , res)=>{
-    res.send(req.user);
-})
+
 
 
 app.get('/user/:id', (req , res)=>{

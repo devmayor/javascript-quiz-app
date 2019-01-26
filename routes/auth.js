@@ -16,6 +16,8 @@ Router.post('/logout',authenticate, auth.logout);
 // Route to view all users. Users need to be authenticated
 Router.get('/users',authenticate, users.users);
 
+// Route to get authenticated user account
+Router.get('/user/me',authenticate, users.me);
 
 
 module.exports = Router;
