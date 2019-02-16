@@ -62,6 +62,6 @@ module.exports.delete = (req , res)=>{
     });
 }
 
-module.exports.createChecklist = (req , res)=>{
-    
+module.exports.checklist = (req , res)=>{
+    res.send('yeppy');
 }

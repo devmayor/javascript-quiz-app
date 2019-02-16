@@ -2,6 +2,7 @@ const express = require('express');
 const todoValidators = require('../app/validators/todo');
 const Router = express.Router();
 const {authenticate} = require('../app/middlewares/authenticated');
+const {responseFormat} = require('../app/validators/responseFormat');
 const Todo = require('../app/controllers/todo');
 
 // Route to list all todos created by authenticated user
@@ -23,7 +24,7 @@ Router.patch('/todos/:id',authenticate,Todo.update);
 Router.delete('/todos/:id',authenticate,Todo.delete);
 
 // Route to create checklist
-Router.post('/checklist/:todoId',[authenticate , todoValidators.createChecklist],Todo.createChecklist);
+Router.post('/checklist/:todoId', authenticate , todoValidators.checklist , responseFormat , Todo.checklist);
 
 
 module.exports = Router;

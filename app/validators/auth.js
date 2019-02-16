@@ -1,4 +1,4 @@
-const { body } = require('express-validator/check');
+const { body , validationResult } = require('express-validator/check');
 const {User} = require('../../db/models/user');
 module.exports.register = [
     body('email')
@@ -30,7 +30,7 @@ module.exports.register = [
     .withMessage('The error length is too short'),
 ];
 
-module.exports.logins = [
+module.exports.login = [
     body('email')
     .exists()
     .isEmail()
