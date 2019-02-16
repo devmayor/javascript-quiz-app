@@ -21,6 +21,7 @@ module.exports.checklist = [
     .withMessage("completed must be a string"),
     check('todoId')
     .isMongoId()
+    .withMessage("Id is incorrect")
     .custom((value , {req})=>{
 
         return Todo.findOne({'_id':value}).then((resp)=>{
