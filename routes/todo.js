@@ -23,7 +23,7 @@ Router.patch('/todos/:id',authenticate,Todo.update);
 Router.delete('/todos/:id',authenticate,Todo.delete);
 
 // Route to create checklist
-Router.post('/checklist/:todoId',authenticate,Todo.createChecklist);
+Router.post('/checklist/:todoId',[authenticate , todoValidators.createChecklist],Todo.createChecklist);
 
 
 module.exports = Router;

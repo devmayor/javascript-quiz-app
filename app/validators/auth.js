@@ -30,10 +30,14 @@ module.exports.register = [
     .withMessage('The error length is too short'),
 ];
 
-module.exports.login = [
+module.exports.logins = [
     body('email')
-    .isEmail(),
+    .exists()
+    .isEmail()
+    .not()
+    .isEmpty(),
     body('password')
+    .exists()
     .not()
     .isEmpty()
 ];

@@ -29,6 +29,7 @@ module.exports.register = (req , res)=>{
 
 // login function
 module.exports.login = (req , res)=>{
+    res.send(req.body);
     const data = _.pick(req.body,['email','password']);
     
     const users = User.findOne({email: data.email}).then((resp)=>{
@@ -50,7 +51,7 @@ module.exports.login = (req , res)=>{
         res.send();
     }).catch((error)=>{
         console.log(error);
-        res.status(401).send();
+        res.status(401).send('jagaban');
     })
 }
 
