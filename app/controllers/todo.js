@@ -63,5 +63,5 @@ module.exports.delete = (req , res)=>{
 }
 
 module.exports.checklist = (req , res)=>{
-    res.send('yeppy');
+    return res.send('ddd');
 }

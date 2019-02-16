@@ -18,5 +18,17 @@ module.exports.checklist = [
     .exists()
     .withMessage("completed must exist")
     .isString()
-    .withMessage("completed must be a string")
+    .withMessage("completed must be a string"),
+    check('todoId')
+    .isMongoId()
+    .custom((value , {req})=>{
+
+        return Todo.findOne({'_id':value}).then((resp)=>{
+            if(!resp){
+                return Promise.reject("This todo doesn't exist");
+            }
+        });
+        
+        
+    })
 ]
