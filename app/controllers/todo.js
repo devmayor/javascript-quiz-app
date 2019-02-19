@@ -63,5 +63,13 @@ module.exports.delete = (req , res)=>{
 }
 
 module.exports.checklist = (req , res)=>{
-    return res.send('ddd');
+    const id = req.param('todoId');
+    const checklist = _.pick(req , checklist);
+
+    const Todo = Todo.findByIdAndUpdate(id , {$push : {checklist : {
+        $each: checklist
+            }
+        }
+    })
+    return res.send(id);
 }
