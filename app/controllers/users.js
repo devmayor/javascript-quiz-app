@@ -1,9 +1,14 @@
+const _ = require('lodash');
+
 const {User} = require('../../db/models/user');
 const { ObjectID } = require('mongodb');
 
 module.exports.users = (req , res)=>{
     User.find().then((resp)=>{
+        
+        
         res.send(resp);
+       
     },(err)=>{
         res.status(401).send();
     })
@@ -11,6 +16,8 @@ module.exports.users = (req , res)=>{
 }
 
 module.exports.me = (req , res)=>{
+      console.log(req.user);
+
     res.send(req.user);
 }
 

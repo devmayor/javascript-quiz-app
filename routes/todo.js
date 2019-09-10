@@ -11,14 +11,14 @@ Router.get('/',authenticate, Todo.get);
 
 // Route to save a new todo
 // You need to validation to this field
-Router.post('/',authenticate,Todo.save);
+Router.post('/',authenticate, todoValidators.addTodo , Todo.save);
 
 
 // Route to complete a todo
 Router.post('/todos/complete/:id',authenticate,Todo.complete);
 
 // Route to update a todo
-Router.patch('/todos/:id',authenticate,Todo.update);
+Router.patch('/todos/:id',authenticate,todoValidators.addTodo, responseFormat ,Todo.update);
 
 // Route to delete a todo
 Router.delete('/todos/:id',authenticate,Todo.delete);
@@ -26,5 +26,7 @@ Router.delete('/todos/:id',authenticate,Todo.delete);
 // Route to create checklist
 Router.post('/checklist/:todoId', authenticate , todoValidators.checklist , responseFormat , Todo.checklist);
 
+// Route to edit content of a todo ckecklist 
+Router.patch('/checklist/:todoId/:checklistId', authenticate , todoValidators.editChecklist , responseFormat , Todo.checklistUpdate);
 
 module.exports = Router;

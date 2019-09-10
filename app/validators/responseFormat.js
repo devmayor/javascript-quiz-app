@@ -2,6 +2,7 @@ const { validationResult} = require('express-validator/check');
 
 const responseFormat = (req, res, next) => {
     const result = validationResult(req);
+    
     if (result.isEmpty()) {
         return next();
     }

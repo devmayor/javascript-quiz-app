@@ -71,8 +71,9 @@ userSchema.pre('save',function(next){
 userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
-    
-    return _.pick(userObject,['name','email','age','location']);
+    // console.log("user",user);
+    // return _.pick(userObject,['name','email','age','location']);
+    return _.omit(userObject , ['password','tokens']);
 }
 
 userSchema.methods.generateAuthToken = function () {

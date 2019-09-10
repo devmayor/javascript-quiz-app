@@ -3,7 +3,6 @@ const auth = require('../app/controllers/auth');
 const users = require('../app/controllers/users');
 const authValidators = require('../app/validators/auth');
 const Router = express.Router();
-const { check ,validationResult} = require('express-validator/check');
 const {authenticate} = require('../app/middlewares/authenticated');
 const {responseFormat} = require('../app/validators/responseFormat');
 // Route to register new user
@@ -28,7 +27,7 @@ Router.get('/user/:id', users.profile);
 Router.delete('/user/:id', authenticate ,users.delete);
 
 // Route to update a user profile
-Router.patch('/user/:id',authenticate ,users.update);
+Router.post('/user/:id' , authenticate , authValidators.updateProfile, responseFormat, users.update);
 
 
 

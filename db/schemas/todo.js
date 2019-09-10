@@ -15,7 +15,7 @@ const TodoSchema = new Schema({
         required: true,
         minlength: 1,
         trim: true,
-        maxlength: 300,
+        maxlength: 1500,
     },
     completed: {
         type: Boolean,
@@ -60,8 +60,5 @@ TodoSchema.methods.complete = function (completed) {
         });
     
     })
-    
 }
-
-
 module.exports = {TodoSchema};
