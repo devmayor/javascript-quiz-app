@@ -1,0 +1,32 @@
+version: '3'
+
+services: 
+  redis:
+    image: redis:latest
+    ports: 
+      - "6379:6379"
+  mongodb:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+  backendapp:
+    # restart: always
+    # image: nodetodoapi:latest
+    env_file: .env
+    # volumes: 
+    #   - ${PWD}:/usr/src/app/"
+    #   - /usr/src/app/node_modules
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:3000"
+    links: 
+      - mongodb
+    environment: 
+      - "REDIS_HOST=redis"
+      - "DB_HOST=database"
+    depends_on:
+      - redis
+      - mongodb
