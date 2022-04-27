@@ -16,9 +16,9 @@ app.use(bodyParser.json());
 
 app.use('/auth', AuthRoutes);
 
-app.use('/todos', TodoRoutes);
+// app.use('/todos', TodoRoutes);
 
-app.use('/monitor' , MonitorRoutes);
+// app.use('/monitor' , MonitorRoutes);
 
 // create an api for managing errors for api calls thats are never found
 

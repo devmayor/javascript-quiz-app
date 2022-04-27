@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
+// would be saved in a n env file
+const connectionString = process.env.db;
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/TodoApp');
-mongoose.connect('mongodb://mongo:27017/TodoApp');
+mongoose.connect(connectionString);
 
 module.exports.mongoose = {mongoose};
