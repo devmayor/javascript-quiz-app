@@ -1,2 +1,2 @@
-# NodeSuperTodoApp
-Todo App Api written in Nodejs, MongoDb , Mongoose 
+# Quiz App
+Quiz App Api written in Nodejs, MongoDb , Mongoose 
